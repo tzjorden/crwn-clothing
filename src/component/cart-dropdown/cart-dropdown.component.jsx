@@ -17,7 +17,7 @@ const CartDropdown = ({ cartItems, history }) => (
       
       {
         cartItems.length ? (                               /* if cartItems.lengths is equal to zero/false */
-          cartItems.map(cartItem => (                   /* if not this will render the cart items */
+          cartItems.map(cartItem => (                       /* if not this will render the cart items */
            <CartItem key={cartItem.id} item={cartItem} /> 
       ))
       ): (
