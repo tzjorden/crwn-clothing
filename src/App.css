@@ -1,0 +1,13 @@
+body {
+  font-family: 'Open Sans Condensed';
+  padding: 20px 60px;
+}
+
+a {
+  text-decoration: none; /* a tag is the SHOP/CONTACT buttons */
+  color : black;
+}
+
+*{
+  box-sizing: border-box;  /*makes sure all the padding is alligned with borer when the box is clicked to fill in information ie email and password box */
+}
