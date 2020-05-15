@@ -19,7 +19,7 @@ class App extends React.Component  {  /* class component to have access to state
     unsubscribeFromAuth = null;
 
     componentDidMount() {                   /* If a user signs in */
-      const {setCurrentUser} = this.props;
+      const {setCurrentUser} = this.props;    /* destructure collectionsArray from props  */
 
       this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => { /* asysnc to make potential API request */
         if(userAuth) {                                                  /* if userAuth exists  */
@@ -33,6 +33,7 @@ class App extends React.Component  {  /* class component to have access to state
             });
         }
         setCurrentUser(userAuth); /* updates with userAuth object */
+        addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title,items})));  /* pass collectionsArray into addCollectionAndDocuments. Destructure title, items and return new object where   */
       });
     }
 
@@ -67,7 +68,7 @@ class App extends React.Component  {  /* class component to have access to state
 }
 
 const mapStateToProps = createStructuredSelector({ /* Gets current user from redux state */
-  currentUser : selectCurrentUser
+  currentUser : selectCurrentUser,
 });
 
 const mapDispatchToProps = dispatch => ({

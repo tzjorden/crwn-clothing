@@ -14,7 +14,6 @@ const config = {
         measurementId: "G-4ZHVBEHFDF"
       };
 
-
     /* This function will take the user object from auth library and store it in the database */
 
     export const createUserProfileDocument = async (userAuth, additionalData) => {  /* additionalData will be passed into userAuth as an object */
@@ -37,16 +36,25 @@ const config = {
           })
         } catch (error){
             console.log('error creating user', error.message);
-
         }
-        
       }
-
-      return userRef; /* In case userRef object is needed to do other things*/
+         return userRef;                                /* In case userRef object is needed to do other things*/
+           
+            
     };
 
+export const addCollectionAndDocuments = (collectionKey, objectsToAdd) => { /* will take collectionKey and add objectsToAdd */
+  const collectionRef = firestore.collection(collectionKey);  /* get collectionRef from firestore passing in collectionKey */
 
-    firebase.initializeApp(config);
+  const batch = firestore.batch();
+  objectsToAdd.forEach(obj => {     /*forEach is ary method that calls the element. It gets the object*/
+    const newDocRef = collectionRef.doc();  /* newDocRef gets a newDocRef in collectionRef and generate a random id  */
+    batch.set(newDocRef,obj);
+
+  }); 
+
+  batch.commit /* commits the batch request */
+}; 
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
