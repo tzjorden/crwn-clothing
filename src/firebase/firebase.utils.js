@@ -12,7 +12,7 @@ const config = {
         messagingSenderId: "66343530609",
         appId: "1:66343530609:web:6b18b68c755ec8586d6bd0",
         measurementId: "G-4ZHVBEHFDF"
-      };
+      }; 
 
     /* This function will take the user object from auth library and store it in the database */
 
@@ -38,10 +38,8 @@ const config = {
             console.log('error creating user', error.message);
         }
       }
-         return userRef;                                /* In case userRef object is needed to do other things*/
-           
-            
-    };
+         return userRef;                                /* In case userRef object is needed to do other things */  
+    }; 
 
 export const addCollectionAndDocuments = (collectionKey, objectsToAdd) => { /* will take collectionKey and add objectsToAdd */
   const collectionRef = firestore.collection(collectionKey);  /* get collectionRef from firestore passing in collectionKey */
@@ -53,8 +51,26 @@ export const addCollectionAndDocuments = (collectionKey, objectsToAdd) => { /* w
 
   }); 
 
-  batch.commit /* commits the batch request */
+  return await batch.commit();          /* commits the batch request  */
 }; 
+
+export const convertCollectionSnapshotToMap = (collections) => {           /* converts arr to object */
+    const transformedCollection = collections.docs.map(doc => {
+      const{title, items} = doc.data();
+
+      return {
+        routeName : encodeURI(title.toLowerCase()),
+        id : docSnapshot.id,
+        title,
+        items
+      };
+
+    });
+    return transformedCollection.reduce( (accumulator, collection) => {
+        accumulator[collection.title.toLowerCase()] = collection;     /*accumulator  */
+        return accumulator;
+    } , {})
+}    
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
